@@ -14,12 +14,13 @@ import {
 } from './App.styled';
 
 export const App = () => {
-  const savedContacts = () => {
-    const contactList = localStorage.getItem('contactList');
-    return contactList ? JSON.parse(contactList) : [];
-  };
-
-  const [contacts, setContacts] = useState(savedContacts);
+  const [contacts, setContacts] = useState(() => {
+    const contactList = JSON.parse(localStorage.getItem('contactList'));
+    if (contactList?.length) {
+      return contactList;
+    }
+    return [];
+  });
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
